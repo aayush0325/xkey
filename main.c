@@ -7,7 +7,6 @@ volatile sig_atomic_t stop;
 int main() {
 	struct sigaction sa = {0};
 
-
 	const char *dev =
 	"/dev/input/by-path/pci-0000:06:00.3-usb-0:1:1.0-event-kbd";
 

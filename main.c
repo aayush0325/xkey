@@ -46,7 +46,7 @@ int main() {
 
 	ioctl(keyboard_fd, EVIOCGRAB, FALSE);
     close(keyboard_fd);
-	close(xkey_fd);
 	ioctl(xkey_fd, UI_DEV_DESTROY);
+	close(xkey_fd);
     return EXIT_SUCCESS;
 }

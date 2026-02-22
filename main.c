@@ -24,10 +24,6 @@ void handle_signal(int sig) {
 	stop = 1;
 }
 
-static int xkey_fd = -1;
-struct uinput_setup usetup;
-struct input_event event;
-
 int main() {
     const char *dev =
 		"/dev/input/by-path/pci-0000:06:00.3-usb-0:1:1.0-event-kbd";
@@ -35,6 +31,10 @@ int main() {
     struct input_event ev;
     ssize_t n;
 	int keyboard_fd;
+
+	static int xkey_fd = -1;
+	struct uinput_setup usetup;
+	struct input_event event;
 
     keyboard_fd = open(dev, O_RDONLY);
 	xkey_fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
@@ -47,6 +47,13 @@ int main() {
     usetup.id.product = 0x1;
     usetup.id.bustype = BUS_USB;
 
+	struct uinput_abs_setup abs = {0};
+	abs.code = ABS_X;
+	abs.absinfo.minimum = -32768;
+	abs.absinfo.maximum = 32767;
+
+	ioctl(xkey_fd, UI_ABS_SETUP, &abs);
+
 	struct sigaction sa = {0};
 	sa.sa_handler = handle_signal;
 	sigaction(SIGINT, &sa, NULL);
@@ -56,7 +63,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-	sleep(5);
+	sleep(2);
 	ioctl(keyboard_fd, EVIOCGRAB, 1);
 
 	ioctl(xkey_fd, UI_SET_KEYBIT, BTN_SOUTH);
@@ -88,6 +95,10 @@ int main() {
 	ioctl(xkey_fd, UI_SET_ABSBIT, ABS_Z);
 	ioctl(xkey_fd, UI_SET_ABSBIT, ABS_RZ);
 
+	ioctl(xkey_fd, UI_SET_EVBIT, EV_KEY);
+	ioctl(xkey_fd, UI_SET_EVBIT, EV_ABS);
+	ioctl(xkey_fd, UI_SET_EVBIT, EV_SYN);
+
 	ioctl(xkey_fd, UI_DEV_SETUP, &usetup);
 	ioctl(xkey_fd, UI_DEV_CREATE);
 
@@ -113,12 +124,17 @@ int main() {
             break;
         }
 
+		if (ev.type == EV_SYN && ev.code == SYN_REPORT) {
+            printf("--------SYN REPORT--------\n");
+            fflush(stdout);
+			continue;
+        }
+
         if (ev.type == EV_KEY && ev.value >= 0 && ev.value <= 2) {
             printf("%s  code=0x%04x (%d)\n",
                    evval[ev.value],
                    ev.code,
                    ev.code);
-            fflush(stdout);
         }
 
 		if (ev.type == EV_KEY && ev.code == KEY_ESC && ev.value == 1) {
@@ -139,5 +155,7 @@ int main() {
 
 	ioctl(keyboard_fd, EVIOCGRAB, 0);
     close(keyboard_fd);
+	close(xkey_fd);
+	ioctl(xkey_fd, UI_DEV_DESTROY);
     return EXIT_SUCCESS;
 }

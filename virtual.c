@@ -96,3 +96,13 @@ void setup_virtual_device() {
 
     sleep(1); // give kernel time
 }
+
+void emit(int fd, int type, int code, int val) {
+    struct input_event ie;
+    ie.type = type;
+    ie.code = code;
+    ie.value = val;
+    ie.time.tv_sec = 0; // Timestamps are typically ignored
+    ie.time.tv_usec = 0;
+    write(fd, &ie, sizeof(ie));
+}

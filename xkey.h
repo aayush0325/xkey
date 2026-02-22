@@ -30,4 +30,6 @@ void setup_virtual_device();
 
 int handle_workflow();
 
+void emit(int fd, int type, int code, int val);
+
 #endif

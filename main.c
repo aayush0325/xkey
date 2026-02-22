@@ -36,7 +36,7 @@ int main() {
 	setup_virtual_device();
 
     while (1) {
-		int res = handle_workflow(&toggled);
+		int res = handle_workflow();
 		if (res < 0) {
 			break;
 		}

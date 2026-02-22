@@ -40,8 +40,6 @@ void setup_virtual_device() {
     // Shoulders
     ioctl(xkey_fd, UI_SET_KEYBIT, BTN_TL);
     ioctl(xkey_fd, UI_SET_KEYBIT, BTN_TR);
-    ioctl(xkey_fd, UI_SET_KEYBIT, BTN_TL2);
-    ioctl(xkey_fd, UI_SET_KEYBIT, BTN_TR2);
 
     // Stick press
     ioctl(xkey_fd, UI_SET_KEYBIT, BTN_THUMBL);

@@ -16,18 +16,18 @@
 
 #define IS_PRESSED 1
 #define IS_RELEASED 0
-
 #define FALSE 0
 #define TRUE 1
 
 extern int keyboard_fd;
 extern int xkey_fd;
 extern volatile sig_atomic_t stop;
+extern int toggled;
 
 void handle_signal(int sig);
 
 void setup_virtual_device();
 
-int handle_workflow(int *is_esc_pressed, int *toggled);
+int handle_workflow();
 
 #endif

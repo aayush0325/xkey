@@ -6,7 +6,7 @@ static const char *evval[] = {
     "REPEAT"
 };
 
-int handle_workflow(int *is_esc_pressed, int *toggled) {
+int handle_workflow() {
 	struct input_event ev;
 	int n;
 
@@ -40,19 +40,15 @@ int handle_workflow(int *is_esc_pressed, int *toggled) {
 			   ev.code);
 	}
 
-	if (ev.type == EV_KEY && ev.code == KEY_ESC && ev.value == IS_PRESSED) {
-		*is_esc_pressed = FALSE;
-	}
-
-	if (ev.type == EV_KEY && ev.code == KEY_ESC && ev.value == IS_RELEASED && *is_esc_pressed) {
-		*is_esc_pressed = FALSE;
-		if (*toggled) {
-			ioctl(keyboard_fd, EVIOCGRAB, FALSE);
-			*toggled = FALSE;
+	if (ev.type == EV_KEY && ev.code == KEY_ESC && ev.value == 0) {
+		if (toggled) {
+			ioctl(keyboard_fd, EVIOCGRAB, 0);
+			toggled = FALSE;
 		} else {
-			ioctl(keyboard_fd, EVIOCGRAB, TRUE);
-			*toggled = TRUE;
+			ioctl(keyboard_fd, EVIOCGRAB, 1);
+			toggled = TRUE;
 		}
 	}
+
 	return 1;
 }

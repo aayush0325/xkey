@@ -3,6 +3,7 @@
 int keyboard_fd;
 int xkey_fd;
 volatile sig_atomic_t stop;
+int toggled;
 
 int main() {
 	struct sigaction sa = {0};
@@ -11,6 +12,7 @@ int main() {
 	"/dev/input/by-path/pci-0000:06:00.3-usb-0:1:1.0-event-kbd";
 
 	stop = 0;
+	toggled = FALSE;
 
 	sa.sa_handler = handle_signal;
 	sigaction(SIGINT, &sa, NULL);
@@ -33,11 +35,8 @@ int main() {
 
 	setup_virtual_device();
 
-	int toggled = FALSE;
-	int is_esc_pressed = FALSE;
-
     while (1) {
-		int res = handle_workflow(&is_esc_pressed, &toggled);
+		int res = handle_workflow(&toggled);
 		if (res < 0) {
 			break;
 		}

@@ -7,20 +7,7 @@ void setup_virtual_device() {
 	memset(&usetup, 0, sizeof(usetup));
 
 	snprintf(usetup.name, UINPUT_MAX_NAME_SIZE, "XKEY-controller");
-    usetup.id.version = 1;
-    usetup.id.vendor = 0x1;
-    usetup.id.product = 0x1;
-    usetup.id.bustype = BUS_USB;
 
-	abs.code = ABS_X;
-	abs.absinfo.minimum = -32768;
-	abs.absinfo.maximum = 32767;
-
-	ioctl(xkey_fd, UI_ABS_SETUP, &abs);
-
-	memset(&usetup, 0, sizeof(usetup));
-
-	snprintf(usetup.name, UINPUT_MAX_NAME_SIZE, "XKEY-controller");
     usetup.id.version = 1;
     usetup.id.vendor = 0x1;
     usetup.id.product = 0x1;

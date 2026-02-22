@@ -63,6 +63,11 @@ int main() {
         return EXIT_FAILURE;
     }
 
+	if (xkey_fd < 0) {
+        fprintf(stderr, "CANNOT CREATE VIRTUAL DEVICE: %s", strerror(errno));
+        return EXIT_FAILURE;
+    }
+
 	sleep(2);
 	ioctl(keyboard_fd, EVIOCGRAB, 1);
 

@@ -38,6 +38,11 @@ int handle_workflow() {
 			   evval[ev.value],
 			   ev.code,
 			   ev.code);
+
+		if (toggled == TRUE) {
+			write_event(ev.code, ev.value);
+			syn();
+		}
 	}
 
 	if (ev.type == EV_KEY && ev.code == KEY_ESC && ev.value == 0) {

@@ -116,6 +116,8 @@ void emit_hat0x(int val) { emit(EV_ABS, ABS_HAT0X, val); }
 void emit_hat0y(int val) { emit(EV_ABS, ABS_HAT0Y, val); }
 void emit_lz(int val) { emit(EV_ABS, ABS_Z, val); }
 void emit_rz(int val) { emit(EV_ABS, ABS_RZ, val); }
+void emit_start(int val) { emit(EV_KEY, BTN_START, val); }
+void emit_select(int val) { emit(EV_KEY, BTN_SELECT, val); }
 
 void syn() {
 	emit(EV_SYN, SYN_REPORT, 0);
@@ -172,6 +174,14 @@ void write_event(int event, int val) {
 		case KEY_RIGHTSHIFT:
 			printf("rshift pressed, rz = 255\n");
 			emit_rz(val ? 255 : 0);
+			break;
+		case KEY_ENTER:
+			printf("enter key pressed, pressing start\n");
+			emit_start(val);
+			break;
+		case KEY_BACKSPACE:
+			printf("backspace key pressed, pressing select\n");
+			emit_select(val);
 			break;
 		default:
 			return;

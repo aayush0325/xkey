@@ -18,4 +18,7 @@ $(TARGET): $(OBJ)
 clean:
 	rm -f $(OBJ) $(TARGET)
 
+format:
+	git ls-files '*.c' '*.h' | xargs clang-format -i
+
 re: clean all

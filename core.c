@@ -1,12 +1,9 @@
 #include "xkey.h"
 
-static const char *evval[] = {
-    "RELEASE",
-    "PRESS",
-    "REPEAT"
-};
+static const char *evval[] = {"RELEASE", "PRESS", "REPEAT"};
 
-int handle_workflow() {
+int handle_workflow()
+{
 	struct input_event ev;
 	int n;
 
@@ -34,14 +31,11 @@ int handle_workflow() {
 	}
 
 	if (ev.type == EV_KEY && ev.value >= 0 && ev.value <= 2) {
-		printf("%s  code=0x%04x (%d)\n",
-			   evval[ev.value],
-			   ev.code,
-			   ev.code);
+		printf("%s  code=0x%04x (%d)\n", evval[ev.value], ev.code,
+		       ev.code);
 
 		if (toggled == TRUE) {
 			write_event(ev.code, ev.value);
-			syn();
 		}
 	}
 

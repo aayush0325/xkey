@@ -1,18 +1,18 @@
 #ifndef XKEY_H
 #define XKEY_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <linux/input.h>
-#include <string.h>
-#include <stdio.h>
-#include <termios.h>
-#include <sys/ioctl.h>
-#include <signal.h>
 #include <linux/uinput.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
 #include <sys/time.h>
+#include <termios.h>
+#include <unistd.h>
 
 #define IS_PRESSED 1
 #define IS_RELEASED 0

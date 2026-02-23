@@ -11,23 +11,42 @@
 
 ## Default Mappings
 
+### Left Stick (ABS_X / ABS_Y)
+
+| Keys held | X | Y |
+|-----------|---|---|
+| `W` | 0 | −32767 |
+| `S` | 0 | +32767 |
+| `A` | −32767 | 0 |
+| `D` | +32767 | 0 |
+| `W` + `A` | −23170 | −23170 |
+| `W` + `D` | +23170 | −23170 |
+| `S` + `A` | −23170 | +23170 |
+| `S` + `D` | +23170 | +23170 |
+| Opposing keys (e.g. `W`+`S`) | cancel → 0 | cancel → 0 |
+| All four | 0 | 0 |
+
+Diagonals are normalised to `≈ 32767 / √2 = 23170` to preserve vector length. Key-repeat events (`value 2`) are treated as pressed, so the stick stays active while a key is held.
+
+### Buttons & D-pad
+
 | Keyboard Key | Controller Action |
 |--------------|-------------------|
-| `I`          | North Button (Y) |
-| `K`          | South Button (A) |
-| `J`          | West Button (X)  |
-| `L`          | East Button (B)  |
-| `Left Ctrl`  | Left Bumper (LB) |
-| `Right Ctrl` | Right Bumper (RB)|
-| `Up Arrow`   | D-pad Up        |
-| `Down Arrow` | D-pad Down      |
-| `Left Arrow` | D-pad Left      |
-| `Right Arrow`| D-pad Right     |
-| `Left Shift` | Left Trigger    |
-| `Right Shift`| Right Trigger   |
-| `Enter`      | Start Button    |
-| `Backspace`  | Select Button   |
-| `Esc`        | Toggle Mode     |
+| `I`          | North Button (Y)  |
+| `K`          | South Button (A)  |
+| `J`          | West Button (X)   |
+| `L`          | East Button (B)   |
+| `Left Ctrl`  | Left Bumper (LB)  |
+| `Right Ctrl` | Right Bumper (RB) |
+| `Up Arrow`   | D-pad Up          |
+| `Down Arrow` | D-pad Down        |
+| `Left Arrow` | D-pad Left        |
+| `Right Arrow`| D-pad Right       |
+| `Left Shift` | Left Trigger      |
+| `Right Shift`| Right Trigger     |
+| `Enter`      | Start Button      |
+| `Backspace`  | Select Button     |
+| `Esc`        | Toggle Mode       |
 
 ## Prerequisites
 

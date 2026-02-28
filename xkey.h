@@ -1,6 +1,7 @@
 #ifndef XKEY_H
 #define XKEY_H
 
+#include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <linux/input.h>
@@ -35,5 +36,7 @@ void write_event(int event, int val);
 void emit(int type, int code, int val);
 
 void syn();
+
+int list_devices();
 
 #endif

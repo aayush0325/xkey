@@ -8,15 +8,26 @@ int toggled;
 int main()
 {
 	struct sigaction sa = {0};
-
-	const char *dev =
-	    "/dev/input/by-path/pci-0000:06:00.3-usb-0:1:1.0-event-kbd";
+	char dev[256];
+	int event_num;
 
 	stop = 0;
 	toggled = FALSE;
 
 	sa.sa_handler = handle_signal;
 	sigaction(SIGINT, &sa, NULL);
+
+	if (list_devices() < 0) {
+		return EXIT_FAILURE;
+	}
+
+	printf("\nEnter the event number for your keyboard: ");
+	if (scanf("%d", &event_num) != 1) {
+		fprintf(stderr, "Invalid input\n");
+		return EXIT_FAILURE;
+	}
+
+	snprintf(dev, sizeof(dev), "/dev/input/event%d", event_num);
 
 	keyboard_fd = open(dev, O_RDONLY);
 	xkey_fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
